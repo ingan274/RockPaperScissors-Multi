@@ -94,6 +94,9 @@ $(document).ready(function () {
                 // Lookiing is player disconnect
                 database.ref("/players/p1").onDisconnect().remove();
 
+                $("#playerInput").hide();
+                $("#rpsBtn").show();
+
             } // adding player 2 if player 1 is filled
             else if ((p1 !== null) && (p2 === null)) {
                 var playerName = $("#name-input").val().trim();
@@ -221,19 +224,21 @@ $(document).ready(function () {
     $("#rock").on("click", function () {
         if (p1 && p2 && (playerName === p1.name) && (turn === 1)) {
             var choice = $(this).attr("id");
-            console.log("player selected " + $(this).text());
+            console.log("player selected " + choice);
             p1Choice = choice;
             database.ref().child("/players/p1/choice").set(choice);
 
             turn = 2;
             database.ref().child("/turn").set(2);
+
+            debugger
         }
     });
 
     $("#paper").on("click", function () {
         if (p1 && p2 && (playerName === p1.name) && (turn === 1)) {
             var choice = $(this).attr("id");
-            console.log("player selected " + $(this).text());
+            console.log("player selected " + choice);
             p1Choice = choice;
             database.ref().child("/players/p1/choice").set(choice);
 
@@ -245,7 +250,7 @@ $(document).ready(function () {
     $("#scissors").on("click", function () {
         if (p1 && p2 && (playerName === p1.name) && (turn === 1)) {
             var choice = $(this).attr("id");
-            console.log("player selected " + $(this).text());
+            console.log("player selected " + choice);
             p1Choice = choice;
             database.ref().child("/players/p1/choice").set(choice);
 
