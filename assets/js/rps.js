@@ -188,37 +188,28 @@ $(document).ready(function () {
             database.ref("/turn/").remove();
             database.ref("/outcome/").remove();
             $("#chatdisplay").empty();
-            $("#p1display").removeClass("yourTurn");
-            $("#p2display").removeClass("yourTurn");
+            $("#player1").removeClass("yourTurn");
+            $("#player2").removeClass("yourTurn");
             $(".turn").text("Waiting for all players to join.");
         }
     });
 
     // looking at who's turn it is
     database.ref("/turn/").on("value", function (snapshot) {
-        // Check if it's p1's turn
-        if (snapshot.val() === 1) {
-            console.log("turn 1");
-            turn = 1;
-            // make sure that both players have joined the game
-            // then make the p1 display pane green if it is player 1's
-            // turn and makes sure players 2 panel is not green
-            if (p1 && p2) {
-                $("#p1display").addClass("yourTurn");
-                $("#p2display").removeClass("yourTurn");
-                // show when p1 still has to pick
+        if (p1 && p2) {
+            // Check if it's p1's turn
+            if (snapshot.val() === 1) {
+                turn = 1;
+                $("#player1").addClass("yourTurn");
+                $("#player2").removeClass("yourTurn");
                 $(".turn").html("Waiting on " + p1name + " to choose...");
-            }
-            //otherwise, do the opposite for player 2 and make their
-            // panel green and p2's panel not green 
-        } else if (snapshot.val() === 2) {
-            console.log("turn 2");
-            turn = 2;
-            if (p1 && p2) {
-                $("#p1display").removeClass("yourTurn");
-                $("#p2display").addClass("yourTurn");
-
-                // show when p2 still has to pick 
+                //otherwise, do the opposite for player 2 and make their
+                // panel green and p2's panel not green 
+            } else if (snapshot.val() === 2) {
+                console.log("turn 2");
+                turn = 2;
+                $("#player1").removeClass("yourTurn");
+                $("#player2").addClass("yourTurn");
                 $(".turn").html("Waiting on " + p2name + " to choose...");
             }
         }
@@ -352,6 +343,8 @@ $(document).ready(function () {
                 database.ref().child("/players/p2/tie").set(p2.tie + 1);
             }
         }
+        turn = 1;
+        database.ref().child("/turn").set(1);
     }
 
     // any disconections
@@ -369,9 +362,8 @@ $(document).ready(function () {
         var chatEntry = $("<div>").text(chatMsg);
 
         // if YOU sent the chat message, the name appears in red
-        if (chatMsg.startsWith(localStorage.getItem("name"))) {
+        if (localStorage.getItem("name") === p1.name) {
             chatEntry.addClass("p1color");
-            // if you DID NOT send the chat message, the name appears in blue
         } else {
             chatEntry.addClass("p2color");
         }
