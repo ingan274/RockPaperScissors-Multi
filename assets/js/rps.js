@@ -365,10 +365,8 @@ $(document).ready(function () {
 
     // CHATBOX
     database.ref("/chat/").on("child_added", function (snapshot) {
-        // get the new message from the database
         var chatMsg = snapshot.val();
-        // make a chat variable to append new chat lines into divs
-        var chatEntry = $("<div>").html(chatMsg);
+        var chatEntry = $("<div>").text(chatMsg);
 
         // if YOU sent the chat message, the name appears in red
         if (chatMsg.startsWith(localStorage.getItem("name"))) {
@@ -385,14 +383,13 @@ $(document).ready(function () {
     $("#submitChat").on("click", function (event) {
         event.preventDefault();
         // First, make sure that the player exists and the message textbox has text in it
-        if ((playerName !== "") && ($("#chat-input").val().trim() !== "")) {
+        if ((localStorage.getItem("name") !== "") && ($("#chat-input").val() !== "")) {
             // Grab the message from the input box and subsequently reset the input box
-            var msg = playerName + ": " + $("#chat-text").val().trim();
-            $("#chat-text").val("");
-
+            var message = $("#chat-input").val();
+            var msg = localStorage.getItem("name") + ": " + message;
+            $("#chat-input").val("");
             // Get a key for the new chat entry
             var chatKey = database.ref().child("/chat/").push().key;
-
             // Save the new chat entry
             database.ref("/chat/" + chatKey).set(msg);
         }
