@@ -82,7 +82,6 @@ TITLE font-family: 'Corben', cursive; */
 }
 
 
-
 .results {
     height: 125px;
     width: 80%;
@@ -116,8 +115,20 @@ TITLE font-family: 'Corben', cursive; */
     font-size: 18px;
 }
 
+.p2color {
+    color: rgb(66, 105, 145);
+}
+
+.p1color {
+    color: rgb(38, 54, 70);
+}
+
 #rockPaperSciss {
     margin: 30px auto;
+}
+
+#rpsBtn {
+    display: none;
 }
 
 .rpsbtn {

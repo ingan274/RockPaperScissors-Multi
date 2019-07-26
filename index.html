@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rock | Paper | Scissors</title>
+    <title>✊ ✋ ✌</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -31,7 +31,7 @@
 <body>
     <header>
         <div class="HeaderImage">
-            <h1 class="title">Rock Paper Scissors</h1>
+            <h1 class="title">✊ Rock ✋ Paper ✌ Scissors</h1>
             <h1 class="title subtitle">MultiPlayer Game</h1>
             <a id="headerLogo"
                 style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px"
@@ -60,11 +60,21 @@
         </form>
     </section>
 
+    <section id="rpsBtn">
+        <div class="row">
+            <div class="col-4" id="rockPaperSciss">
+                <button class="rpsbtn" id="rock">Rock</button>
+                <button class="rpsbtn" id="paper">Paper</button>
+                <button class="rpsbtn" id="scissors">Scissors</button>
+            </div>
+        </div>
+    </section>
+
     <section class="gameBoard container-fluid">
         <div class="row">
             <div class="col-1"></div>
             <div class="player col-3 " id="player1">
-                <h1 class="playerNme" id="player1name" present="no">Waiting for Player 1</h1>
+                <h1 class="playerNme" id="player1name">Waiting for Player 1</h1>
                 <h1 class="playerscore">Wins: <span id="player1win">0</span></h1>
                 <h1 class="playerscore">Loses: <span id="player1lose">0</span></h1>
             </div>
@@ -90,18 +100,11 @@
                 </div>
             </div>
             <div class="player col-3 " id="player2">
-                <h1 class="playerNme" id="player2name" present="no">Waiting for Player 2</h1>
+                <h1 class="playerNme" id="player2name">Waiting for Player 2</h1>
                 <h1 class="playerscore">Wins: <span id="player2win">0</span></h1>
                 <h1 class="playerscore">Loses: <span id="player2lose">0</span></h1>
             </div>
             <div class="col-1"></div>
-        </div>
-        <div class="row">
-            <div class="col-4" id="rockPaperSciss">
-                <button class="rpsbtn" id="rock">✊ Rock</button>
-                <button class="rpsbtn" id="paper">✋ Paper</button>
-                <button class="rpsbtn" id="scissors">✌ Scissors</button>
-            </div>
         </div>
     </section>
 
