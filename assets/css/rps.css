@@ -31,7 +31,7 @@ TITLE font-family: 'Corben', cursive; */
 
 .userInput {
     display: block;
-    width: 30%;
+    width: 50%;
     padding: 40px 20px;
     margin: 0px auto;
 }
@@ -83,13 +83,25 @@ TITLE font-family: 'Corben', cursive; */
 
 
 .results {
-    height: 125px;
+    height: 62px;
     width: 80%;
     margin: 10px auto;
     font-family: 'EB Garamond', serif;
     border: 3px dashed grey;
-    padding: 15px 50px;
-    font-size: 25px;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+    text-transform: uppercase;
+
+}
+
+.turn {
+    height: 62px;
+    width: 80%;
+    margin: 10px auto;
+    font-family: 'EB Garamond', serif;
+    padding: 15px;
+    font-size: 20px;
     text-align: center;
 
 }
@@ -99,7 +111,7 @@ TITLE font-family: 'Corben', cursive; */
     width: 95%;
     border: 3px solid slategray;
     margin: 0px auto;
-    padding: 5px;
+    padding: 2px;
 
     text-align: center;
     color:  slategray;

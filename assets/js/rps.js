@@ -71,15 +71,18 @@ $(document).ready(function () {
 
     // Make turn start with player 1
     var turn = 1;
+    var results;
 
     // Listening to submit button of new player
     $("#joinGameBtn").on("click", function (event) {
         event.preventDefault();
         // adding perameters that player 1 must be added before player 2
         if (($("#name-input").val().trim() !== "") && !(p1 && p2)) {
+            localStorage.clear();
             // Adding p1
             if (p1 === null) {
                 var playerName = $("#name-input").val().trim();
+                localStorage.setItem("name", playerName);
                 p1 = {
                     name: playerName,
                     win: 0,
@@ -100,6 +103,7 @@ $(document).ready(function () {
             } // adding player 2 if player 1 is filled
             else if ((p1 !== null) && (p2 === null)) {
                 var playerName = $("#name-input").val().trim();
+                localStorage.setItem("name", playerName);
                 p2 = {
                     name: playerName,
                     win: 0,
@@ -147,7 +151,7 @@ $(document).ready(function () {
             $("#player1win").text("0");
             $("#player1lose").text("0");
             database.ref("/outcome/").remove();
-            $(".results").text("Waiting for all players to join.");
+            $(".turn").text("Waiting for all players to join.");
         }
 
         // Check to see if player 2 exists in our database 
@@ -173,7 +177,7 @@ $(document).ready(function () {
 
         // If both players are now present, it's p1's turn
         if (p1 && p2) {
-            $(".results").text("Game Time. Waiting for " + p1name + " to choose...");
+            $(".turn").text("Waiting for " + p1name + " to choose...");
             console.log("Both players are now present")
             // green border around player turn (rn is player 1)
             $("#player1").addClass("yourTurn");
@@ -186,7 +190,7 @@ $(document).ready(function () {
             $("#chatdisplay").empty();
             $("#p1display").removeClass("yourTurn");
             $("#p2display").removeClass("yourTurn");
-            $(".results").text("Waiting for all players to join.");
+            $(".turn").text("Waiting for all players to join.");
         }
     });
 
@@ -203,7 +207,7 @@ $(document).ready(function () {
                 $("#p1display").addClass("yourTurn");
                 $("#p2display").removeClass("yourTurn");
                 // show when p1 still has to pick
-                $(".results").html("Waiting on " + p1name + " to choose...");
+                $(".turn").html("Waiting on " + p1name + " to choose...");
             }
             //otherwise, do the opposite for player 2 and make their
             // panel green and p2's panel not green 
@@ -215,14 +219,20 @@ $(document).ready(function () {
                 $("#p2display").addClass("yourTurn");
 
                 // show when p2 still has to pick 
-                $(".results").html("Waiting on " + p2name + " to choose...");
+                $(".turn").html("Waiting on " + p2name + " to choose...");
             }
         }
     });
 
+    database.ref("/outcome/").on("value", function (snapshot) {
+        results = snapshot.val();
+        console.log(results)
+        $(".results").text(results);
+    })
+
     // Player 1 buttons
     $("#rock").on("click", function () {
-        if (p1 && p2 && (playerName === p1.name) && (turn === 1)) {
+        if (p1 && p2 && (localStorage.getItem("name") == p1.name) && (turn === 1)) {
             var choice = $(this).attr("id");
             console.log("player selected " + choice);
             p1Choice = choice;
@@ -230,13 +240,11 @@ $(document).ready(function () {
 
             turn = 2;
             database.ref().child("/turn").set(2);
-
-            debugger
         }
     });
 
     $("#paper").on("click", function () {
-        if (p1 && p2 && (playerName === p1.name) && (turn === 1)) {
+        if (p1 && p2 && (localStorage.getItem("name") === p1.name) && (turn === 1)) {
             var choice = $(this).attr("id");
             console.log("player selected " + choice);
             p1Choice = choice;
@@ -248,7 +256,7 @@ $(document).ready(function () {
     });
 
     $("#scissors").on("click", function () {
-        if (p1 && p2 && (playerName === p1.name) && (turn === 1)) {
+        if (p1 && p2 && (localStorage.getItem("name") === p1.name) && (turn === 1)) {
             var choice = $(this).attr("id");
             console.log("player selected " + choice);
             p1Choice = choice;
@@ -262,7 +270,7 @@ $(document).ready(function () {
     // Player 2 buttons
     $("#rock").on("click", function () {
         event.preventDefault();
-        if (p1 && p2 && (playerName === p2.name) && (turn === 2)) {
+        if (p1 && p2 && (localStorage.getItem("name") === p2.name) && (turn === 2)) {
             var choice = $(this).attr("id");
             p2Choice = choice;
             database.ref().child("/players/p2/choice").set(choice);
@@ -272,7 +280,7 @@ $(document).ready(function () {
 
     $("#paper").on("click", function () {
         event.preventDefault();
-        if (p1 && p2 && (playerName === p2.name) && (turn === 2)) {
+        if (p1 && p2 && (localStorage.getItem("name") === p2.name) && (turn === 2)) {
             var choice = $(this).attr("id");
             p2Choice = choice;
             database.ref().child("/players/p2/choice").set(choice);
@@ -282,7 +290,7 @@ $(document).ready(function () {
 
     $("#scissors").on("click", function () {
         event.preventDefault();
-        if (p1 && p2 && (playerName === p2.name) && (turn === 2)) {
+        if (p1 && p2 && (localStorage.getItem("name") === p2.name) && (turn === 2)) {
             var choice = $(this).attr("id");
             p2Choice = choice;
             database.ref().child("/players/p2/choice").set(choice);
@@ -300,20 +308,19 @@ $(document).ready(function () {
                 database.ref().child("/players/p2/tie").set(p2.tie + 1);
             } else if (p2.choice === "paper") {
                 // p2 wins
-                database.ref().child("/outcome/").set("P2 wins!");
+                database.ref().child("/outcome/").set(p2.name + " wins!");
                 database.ref().child("/players/p1/loss").set(p1.loss + 1);
                 database.ref().child("/players/p2/win").set(p2.win + 1);
             } else { // scissors
                 // p1 wins
-                console.log("rock wins");
-                database.ref().child("/outcome/").set("P1 wins!");
+                database.ref().child("/outcome/").set(p1.name + " wins!");
                 database.ref().child("/players/p1/win").set(p1.win + 1);
                 database.ref().child("/players/p2/loss").set(p2.loss + 1);
             }
         } else if (p1.choice === "paper") {
             if (p2.choice === "rock") {
                 // p1 wins
-                database.ref().child("/outcome/").set("P1 wins!");
+                database.ref().child("/outcome/").set(p1.name + " wins!");
                 database.ref().child("/players/p1/win").set(p1.win + 1);
                 database.ref().child("/players/p2/loss").set(p2.loss + 1);
             } else if (p2.choice === "paper") {
@@ -323,19 +330,19 @@ $(document).ready(function () {
                 database.ref().child("/players/p2/tie").set(p2.tie + 1);
             } else { // Scissors
                 // p2 wins
-                database.ref().child("/outcome/").set("P2 win!");
+                database.ref().child("/outcome/").set(p2.name + " wins!");
                 database.ref().child("/players/p1/loss").set(p1.loss + 1);
                 database.ref().child("/players/p2/win").set(p2.win + 1);
             }
         } else if (p1.choice === "scissors") {
             if (p2.choice === "rock") {
                 // p2 wins
-                database.ref().child("/outcome/").set("P2 wins!");
+                database.ref().child("/outcome/").set(p2.name + " wins!");
                 database.ref().child("/players/p1/loss").set(p1.loss + 1);
                 database.ref().child("/players/p2/win").set(p2.win + 1);
             } else if (p2.choice === "paper") {
                 // p1 wins
-                database.ref().child("/outcome/").set("P1 win!");
+                database.ref().child("/outcome/").set(p1.name + " wins!");
                 database.ref().child("/players/p1/win").set(p1.win + 1);
                 database.ref().child("/players/p2/loss").set(p2.loss + 1);
             } else {
@@ -364,7 +371,7 @@ $(document).ready(function () {
         var chatEntry = $("<div>").html(chatMsg);
 
         // if YOU sent the chat message, the name appears in red
-        if (chatMsg.startsWith(playerName)) {
+        if (chatMsg.startsWith(localStorage.getItem("name"))) {
             chatEntry.addClass("p1color");
             // if you DID NOT send the chat message, the name appears in blue
         } else {
@@ -375,19 +382,19 @@ $(document).ready(function () {
         $("#chat").append(chatEntry);
     });
 
-    $("#submitChat").on("click", function(event) {
-    	event.preventDefault();
-    	// First, make sure that the player exists and the message textbox has text in it
-    	if ( (playerName !== "") && ($("#chat-input").val().trim() !== "") ) {
-    		// Grab the message from the input box and subsequently reset the input box
-    		var msg = playerName + ": " + $("#chat-text").val().trim();
-    		$("#chat-text").val("");
+    $("#submitChat").on("click", function (event) {
+        event.preventDefault();
+        // First, make sure that the player exists and the message textbox has text in it
+        if ((playerName !== "") && ($("#chat-input").val().trim() !== "")) {
+            // Grab the message from the input box and subsequently reset the input box
+            var msg = playerName + ": " + $("#chat-text").val().trim();
+            $("#chat-text").val("");
 
-    		// Get a key for the new chat entry
-    		var chatKey = database.ref().child("/chat/").push().key;
+            // Get a key for the new chat entry
+            var chatKey = database.ref().child("/chat/").push().key;
 
-    		// Save the new chat entry
-    		database.ref("/chat/" + chatKey).set(msg);
+            // Save the new chat entry
+            database.ref("/chat/" + chatKey).set(msg);
         }
     });
 });
