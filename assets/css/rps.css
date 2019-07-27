@@ -29,6 +29,12 @@ TITLE font-family: 'Corben', cursive; */
     text-transform: uppercase;
 }
 
+#gameField {
+    background: linear-gradient(rgba(250, 250, 250, .3),rgba(250, 250, 250, .3)), url(https://images.unsplash.com/photo-1503792501406-2c40da09e1e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+    background-size: cover;
+    padding: 30px;
+}
+
 .userInput {
     display: block;
     width: 50%;
@@ -42,25 +48,36 @@ TITLE font-family: 'Corben', cursive; */
     margin: 10px
 }
 
-#joinGameBtn, #submitChat {
+#joinGameBtn{
     background: lightgray;
     color: white;
     font-family: 'EB Garamond', serif;
     margin: 0px 10px
 }
 
+#submitChat {
+    background: white;
+    color: grey;
+    font-family: 'EB Garamond', serif;
+    margin: 0px 10px
+}
+
 #joinGameBtn:hover, #submitChat:hover {
     background: rgb(104, 104, 104);
+    color:white;
 }
 
 #joinGameBtn:active, #submitChat:active {
     background: rgb(71, 71, 71);
+    color:white;
 }
 
 .player{
+    background: rgba(250, 250, 250, .8);
     display: block;
     height: 400px;
     margin: 10px auto;
+    margin-bottom: 50px;
     border: 3px solid darkgrey;
     padding: 50px 50px;
     text-align: center;
@@ -84,7 +101,7 @@ TITLE font-family: 'Corben', cursive; */
 
 .results {
     height: 62px;
-    width: 80%;
+    width: 50%;
     margin: 10px auto;
     font-family: 'EB Garamond', serif;
     border: 3px dashed grey;
@@ -106,25 +123,45 @@ TITLE font-family: 'Corben', cursive; */
 
 }
 
+.chatRoomSection {
+    background: linear-gradient(to bottom, rgba(250, 250, 250, .3), rgba(0, 0, 0, 0)), url(../imgs/rpschat.jpg);
+    background-size: cover;
+    padding: 30px;
+}
+
 .chatTitle {
     font-family: 'Corben', cursive;
-    width: 95%;
-    border: 3px solid slategray;
+    width: 50%;
     margin: 0px auto;
-    padding: 2px;
+    padding: 20px;
 
     text-align: center;
     color:  slategray;
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .chat {
     background: white;
     font-family: 'EB Garamond', serif;
-    height: 160px;
-    width: 98%;
-    margin: 0px auto;
+    width: 50%;
+    margin: 5px auto;
+    margin-top: 0px;
     border: 3px solid slategray;
     font-size: 18px;
+}
+
+.chatInput {
+    width: 50%;
+    margin: 0px auto;
+}
+
+.instantMsg, #messages1, #messages2 {
+    margin: 10px;
+    color: grey;
+    text-align: left;
+    font-family: 'EB Garamond', serif
 }
 
 .p2color {

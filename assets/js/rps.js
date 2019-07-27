@@ -219,6 +219,10 @@ $(document).ready(function () {
         results = snapshot.val();
         console.log(results)
         $(".results").text(results);
+
+        if (snapshot.val() === "") {
+            $(".results").text("Game Results");
+        }
     })
 
     // Player 1 buttons
@@ -359,17 +363,9 @@ $(document).ready(function () {
     // CHATBOX
     database.ref("/chat/").on("child_added", function (snapshot) {
         var chatMsg = snapshot.val();
-        var chatEntry = $("<div>").text(chatMsg);
-
-        // if YOU sent the chat message, the name appears in red
-        if (localStorage.getItem("name") === p1.name) {
-            chatEntry.addClass("p1color");
-        } else {
-            chatEntry.addClass("p2color");
-        }
-
+        var chatEntry = $("<div>").text(chatMsg).addClass("instantMsg");
         // append the div stored in chatEntry with its new styling to the DOM
-        $("#chat").append(chatEntry);
+        $(".chat").append(chatEntry);
     });
 
     $("#submitChat").on("click", function (event) {

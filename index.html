@@ -22,13 +22,14 @@
     <!-- link to jquery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
     <!-- Firebase References -->
     <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-database.js"></script>
 
 </head>
 
-<body>
+
     <header>
         <div class="HeaderImage">
             <h1 class="title">✊ Rock ✋ Paper ✌ Scissors</h1>
@@ -47,66 +48,73 @@
         </div>
     </header>
 
-    <section class="userInput" id="playerInput">
-        <form role="form">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="name-input">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" id="joinGameBtn" type="button">Join Game</button>
-                    </span>
+    <body id="gameField">
+
+        <section class="userInput" id="playerInput">
+            <form role="form">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="name-input">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="joinGameBtn" type="button">Join Game</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section class="container" id="rpsBtn">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6" id="rockPaperSciss">
+                    <button class="rpsbtn" id="rock">Rock</button>
+                    <button class="rpsbtn" id="paper">Paper</button>
+                    <button class="rpsbtn" id="scissors">Scissors</button>
                 </div>
             </div>
-        </form>
-    </section>
-
-    <section id="rpsBtn">
-        <div class="row">
-            <div class="col-sm-12 col-md-10 col-lg-4" id="rockPaperSciss">
-                <button class="rpsbtn" id="rock">Rock</button>
-                <button class="rpsbtn" id="paper">Paper</button>
-                <button class="rpsbtn" id="scissors">Scissors</button>
-            </div>
-        </div>
-    </section>
-
-    <section class="gameBoard container-fluid">
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="player col-3 " id="player1">
-                <h1 class="playerNme" id="player1name">Waiting for Player 1</h1>
-                <h1 class="playerscore">Wins: <span id="player1win">0</span></h1>
-                <h1 class="playerscore">Loses: <span id="player1lose">0</span></h1>
-            </div>
-            <div class="col-4" id="chatScore">
+            <div id="chatScore">
                 <div class="turn">Waiting for all players to join.</div>
-                <div class="results"></div>
-                <div class="chatTitle">ChatBox
-                    <div class="chat">
-                        <p id="messages1"></p>
-                        <p id="messages2"></p>
-                    </div>
-                    <div class="userInput row chatInput">
-                        <form role="form ">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="chat-input">
-                                    <span class="input-chat-btn">
-                                        <button class="btn btn-default" id="submitChat" type="button">Send</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
+                <div class="results">Game results</div>
+            </div>
+        </section>
+
+        <section class="gameBoard container-fluid">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="player col-3 " id="player1">
+                    <h1 class="playerNme" id="player1name">Waiting for Player 1</h1>
+                    <h1 class="playerscore">Wins: <span id="player1win">0</span></h1>
+                    <h1 class="playerscore">Loses: <span id="player1lose">0</span></h1>
+                </div>
+                <div class="col-2"></div>
+                <div class="player col-3 " id="player2">
+                    <h1 class="playerNme" id="player2name">Waiting for Player 2</h1>
+                    <h1 class="playerscore">Wins: <span id="player2win">0</span></h1>
+                    <h1 class="playerscore">Loses: <span id="player2lose">0</span></h1>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </section>
+    </body>
+
+    <section class="chatRoomSection container-fluid">
+        <div class="chatTitle">ChatBox</div>
+        <div class="chat">
+            <p id="messages1">Welcome to Rock Paper Scissors, the multiplayer game.</p>
+            <p id="messages2">Please make sure you see about to see who's turn it is.</p>
+        </div>
+        <div class="userInput row chatInput">
+            <form role="form ">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="chat-input">
+                        <span class="input-chat-btn">
+                            <button class="btn btn-default" id="submitChat" type="button">Send</button>
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="player col-3 " id="player2">
-                <h1 class="playerNme" id="player2name">Waiting for Player 2</h1>
-                <h1 class="playerscore">Wins: <span id="player2win">0</span></h1>
-                <h1 class="playerscore">Loses: <span id="player2lose">0</span></h1>
-            </div>
-            <div class="col-1"></div>
+            </form>
         </div>
+
     </section>
 
 
