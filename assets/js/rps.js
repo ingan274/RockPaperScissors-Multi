@@ -219,7 +219,6 @@ $(document).ready(function () {
         results = snapshot.val();
         console.log(results)
         $(".results").text(results);
-
         if (snapshot.val() === "") {
             $(".results").text("Game Results");
         }
