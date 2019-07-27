@@ -164,7 +164,7 @@ $(document).ready(function () {
             // display player 2 name and score data 
             $("#player2name").text(p2name);
             $("#player2win").text(p2.win);
-            $("#player2lose").text(p2.lose);
+            $("#player2lose").text(p2.loss);
             $("#player2tie").text(p2.tie);
         } else {
             p2 = null;
@@ -383,20 +383,4 @@ $(document).ready(function () {
             database.ref("/chat/" + chatKey).set(msg);
         }
     });
-
-    // $("#submitChat").on("keyup", function (event) {
-    //     event.preventDefault();
-    //     console.log(event)
-    //     // First, make sure that the player exists and the message textbox has text in it
-    //     if ((localStorage.getItem("name") !== "") && ($("#chat-input").val() !== "")) {
-    //         // Grab the message from the input box and subsequently reset the input box
-    //         var message = $("#chat-input").val();
-    //         var msg = localStorage.getItem("name") + ": " + message;
-    //         $("#chat-input").val("");
-    //         // Get a key for the new chat entry
-    //         var chatKey = database.ref().child("/chat/").push().key;
-    //         // Save the new chat entry
-    //         database.ref("/chat/" + chatKey).set(msg);
-    //     }
-    // });
 });
