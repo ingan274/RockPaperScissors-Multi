@@ -142,7 +142,8 @@ $(document).ready(function () {
             // display player 1 name and score data 
             $("#player1name").text(p1name);
             $("#player1win").text(p1.win);
-            $("#player1lose").text(p1.lose);
+            $("#player1lose").text(p1.loss);
+            $("#player1tie").text(p1.tie);
         } else {
             p1 = null;
             p1name = "";
@@ -164,6 +165,7 @@ $(document).ready(function () {
             $("#player2name").text(p2name);
             $("#player2win").text(p2.win);
             $("#player2lose").text(p2.lose);
+            $("#player2tie").text(p2.tie);
         } else {
             p2 = null;
             p2name = "";
