@@ -25,14 +25,14 @@ $(document).ready(function () {
 
     // -----DATABASE STRUCTURE-----
     // players >
-    // p1 >
-    // name
-    // win
-    // loss
-    // p2 >
-    // name 
-    // win
-    // loss
+    //   p1 >
+    //      name
+    //      win
+    //      loss
+    //   p2 >
+    //      name 
+    //      win
+    //      loss
     // logic notes: 
     // if outcome is 1 = "player 1 wins"
     // if outcome is 2 = "player 2 wins"
@@ -118,6 +118,7 @@ $(document).ready(function () {
 
                 database.ref().child("/players/p2").set(p2);
                 database.ref("/players/p2").onDisconnect().remove();
+
             }
 
             // print a message to the chat when a user joins the game;
@@ -128,7 +129,73 @@ $(document).ready(function () {
 
             $("#name-input").val("");
         }
+        // if player 2 and player 1 is filled
+        if (p1 !== null && p2 !== null) {
+            $("#extraPlayer").modal("show");
+        }
     });
+    $("#playerInput").keypress(function (e) {
+        if (e.which === 13 || e.keyCode === 13) {
+            event.preventDefault();
+            // adding perameters that player 1 must be added before player 2
+            if (($("#name-input").val().trim() !== "") && !(p1 && p2)) {
+                localStorage.clear();
+                // Adding p1
+                if (p1 === null) {
+                    var playerName = $("#name-input").val().trim();
+                    localStorage.setItem("name", playerName);
+                    p1 = {
+                        name: playerName,
+                        win: 0,
+                        loss: 0,
+                        tie: 0,
+                        choice: ""
+                    };
+                    // creating under child 1
+                    database.ref().child("/players/p1").set(p1);
+                    // setting turn to player 1
+                    database.ref().child("/turn").set(1);
+                    // Lookiing is player disconnect
+                    database.ref("/players/p1").onDisconnect().remove();
+
+                    $("#playerInput").hide();
+                    $("#rpsBtn").show();
+
+                } // adding player 2 if player 1 is filled
+                else if ((p1 !== null) && (p2 === null)) {
+                    var playerName = $("#name-input").val().trim();
+                    localStorage.setItem("name", playerName);
+                    p2 = {
+                        name: playerName,
+                        win: 0,
+                        loss: 0,
+                        tie: 0,
+                        choice: ""
+                    };
+
+                    // hide Player input so that no one else can join
+                    $("#playerInput").hide();
+                    $("#rpsBtn").show();
+
+                    database.ref().child("/players/p2").set(p2);
+                    database.ref("/players/p2").onDisconnect().remove();
+                }
+
+                // print a message to the chat when a user joins the game;
+                var msg = playerName + " has joined!";
+                var chatKey = database.ref().child("/chat/").push().key;
+                // push the key and write the chat message to the database
+                database.ref("/chat/" + chatKey).set(msg);
+
+                $("#name-input").val("");
+            }
+
+            // if player 2 and player 1 is filled
+            if (p1 !== null && p2 !== null) {
+                $("#extraPlayer").modal("show");
+            }}
+        });
+
 
     // any database changes
     database.ref("/players/").on("value", function (snapshot) {

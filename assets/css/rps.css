@@ -200,3 +200,14 @@ TITLE font-family: 'Corben', cursive; */
 .rpsbtn:active {
     background: rgb(71, 71, 71);
 }
+
+/* MODAL */
+.modal-body, .modal-footer {
+    font-family: 'EB Garamond', serif;
+    color: rgb(66, 105, 145);
+}
+
+.modal-title {
+    font-family: 'Corben', cursive; 
+    color: rgb(38, 54, 70);
+}
